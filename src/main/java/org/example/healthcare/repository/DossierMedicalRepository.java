@@ -1,4 +1,9 @@
 package org.example.healthcare.repository;
 
-public interface DossierMedicalRepository {
+import org.example.healthcare.model.DossierMedical;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface DossierMedicalRepository extends JpaRepository<DossierMedical,Long> {
 }
