@@ -1,7 +1,47 @@
 package org.example.healthcare.service;
 
+import lombok.AllArgsConstructor;
+import org.example.healthcare.dto.MedecinDTO;
+import org.example.healthcare.mapper.MedecinMapper;
+import org.example.healthcare.model.Medecin;
+import org.example.healthcare.repository.MedecinRepository;
+import org.springframework.data.repository.core.support.RepositoryMethodInvocationListener;
 import org.springframework.stereotype.Service;
+import tools.jackson.databind.cfg.MapperBuilder;
+
+import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class MedecinService {
+    final MedecinRepository medecinRepository;
+    final MedecinMapper medecinMapper;
+    private final MapperBuilder mapperBuilder;
+    private final RepositoryMethodInvocationListener repositoryMethodInvocationListener;
+
+    public MedecinDTO ajouterMedecin(MedecinDTO medecinDTO){
+        Medecin medecin = medecinMapper.toEntity(medecinDTO);
+        return medecinMapper.toDTO(medecinRepository.save(medecin));
+    }
+
+    public MedecinDTO modifierMedecin(Long idMedecin, MedecinDTO medecinDTO){
+        Medecin medecin = chercherMedecinParId(idMedecin);
+        medecinMapper.modifierMedecinDTO(medecinDTO,medecin);
+        Medecin newMedecin = medecinRepository.save(medecin);
+        return medecinMapper.toDTO(newMedecin);
+    }
+
+    public Medecin chercherMedecinParId(Long idMedecin){
+     return medecinRepository.findById(idMedecin).orElseThrow(()-> new RuntimeException("Médecin introuvable"));
+    }
+
+    public void supprimerMedecin(Long idMedecin){
+        Medecin medecin = chercherMedecinParId(idMedecin);
+        medecinRepository.delete(medecin);
+    }
+
+    public List<MedecinDTO> medecinsList(){
+        List<Medecin> medecins = medecinRepository.findAll();
+        return medecinMapper.toDTO(medecins);
+    }
 }
