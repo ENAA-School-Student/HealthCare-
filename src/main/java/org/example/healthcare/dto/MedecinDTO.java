@@ -4,9 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.mapstruct.Mapper;
 @Data
-@Mapper(componentModel = "spring")
 public class MedecinDTO {
     private Long id;
     @NotBlank(message ="le nom est obligatoire")

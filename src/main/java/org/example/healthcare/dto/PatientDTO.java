@@ -2,11 +2,9 @@ package org.example.healthcare.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import org.mapstruct.Mapper;
 
 import java.time.LocalDate;
 @Data
-@Mapper(componentModel = "spring")
 public class PatientDTO {
     private Long id;
     @NotBlank(message ="le nom est obligatoire")
