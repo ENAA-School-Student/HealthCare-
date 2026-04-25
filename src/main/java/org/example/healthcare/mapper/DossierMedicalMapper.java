@@ -7,6 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface DossierMedicalMapper {
 
-    DossierMedical toEnity(DossierMedicalDTO dossierMedicalDTO);
+    DossierMedical toEntity(DossierMedicalDTO dossierMedicalDTO);
     DossierMedicalDTO toDTO(DossierMedical dossierMedical);
 }

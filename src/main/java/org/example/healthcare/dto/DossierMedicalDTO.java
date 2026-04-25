@@ -1,6 +1,7 @@
 package org.example.healthcare.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 
@@ -10,9 +11,12 @@ import java.time.LocalDate;
 public class DossierMedicalDTO {
 
     private Long id;
+    @NotBlank (message = "Diagnostic requis")
     private String diagnostic;
+    @NotBlank(message = "Observation requise")
     private String observation;
-    @NotBlank(message = "il faut ajouter la date de création du dossier")
     private LocalDate dateCreation;
+    @NotNull
+    private Long patientId;
 
 }
