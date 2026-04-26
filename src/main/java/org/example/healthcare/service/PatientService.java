@@ -25,23 +25,26 @@ private final PatientMapper  patientMapper;
     return patientMapper.toDTO(patientRepository.save(patient));
 }
 public PatientDTO modifierPatient(Long idPatient, PatientDTO patientDTO) {
-Patient patient = patientMapper.toEntity(chercherPatientParId(idPatient));
+Patient patient = chercherPatientParId(idPatient);
 patientMapper.modifierPatient(patientDTO,patient);
 return patientMapper.toDTO(patientRepository.save(patient));
 }
 
-public PatientDTO chercherPatientParId(Long idPatient) {
-    Patient patient = patientRepository.findById(idPatient).orElseThrow(()-> new RuntimeException("Patient introuvable."));
-    return patientMapper.toDTO(patient);
+public Patient chercherPatientParId(Long idPatient) {
+   return patientRepository.findById(idPatient).orElseThrow(()-> new RuntimeException("Patient introuvable."));
 }
 
 public void supprimerPatient(Long idPatient) {
-        Patient patient = patientMapper.toEntity(chercherPatientParId(idPatient));
+        Patient patient = chercherPatientParId(idPatient);
         patientRepository.delete(patient);
 }
 
 public List<PatientDTO> patientsList(){
         List<Patient> patients = patientRepository.findAll();
         return patientMapper.toDTO(patients);
+}
+
+public PatientDTO consulterPatient(Long idPatient) {
+        return  patientMapper.toDTO(chercherPatientParId(idPatient));
 }
 }
