@@ -18,6 +18,4 @@ public class PatientDTO {
     @NotNull
     @Past
     private LocalDate dateNaissance;
-    @NotNull
-    private Long idDossierMedical;
 }

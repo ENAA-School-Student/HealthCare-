@@ -26,7 +26,7 @@ public class MedecinController {
     }
 
     @PutMapping("/modifier/{id}")
-    public MedecinDTO modifierMedecin(@Valid @PathVariable Long id, @RequestBody MedecinDTO medecinDTO){
+    public MedecinDTO modifierMedecin( @PathVariable Long id,@Valid @RequestBody MedecinDTO medecinDTO){
         return medecinService.modifierMedecin(id, medecinDTO);
     }
 

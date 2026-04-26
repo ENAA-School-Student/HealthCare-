@@ -42,7 +42,7 @@ public class RendezVousController {
     }
 
     @PatchMapping("/modifier/{idRendezVous}")
-    public RendezVousDTO modifierRendezVous(@Valid @PathVariable Long idRendezVous, @RequestBody RendezVousDTO rendezVousDTO){
+    public RendezVousDTO modifierRendezVous( @PathVariable Long idRendezVous,@Valid @RequestBody RendezVousDTO rendezVousDTO){
         return rendezVousService.modifierRendezVous(idRendezVous,rendezVousDTO);
     }
 
