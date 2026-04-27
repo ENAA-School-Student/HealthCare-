@@ -22,11 +22,9 @@ public class RendezVous {
     public enum StatutRendezVous{
         PLANIFIE,
         CONFIRME,
-        PATIENT_ARRIVE,
         EN_CONSULTATION,
         TERMINE,
         ANNULE,
-        ABSENCE,
         REPROGRAMME
     }
 

@@ -27,6 +27,6 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     private List<RendezVous> rendezVousList = new ArrayList<>();
 
-    @OneToOne
-    DossierMedical dossierMedical;
+    @OneToOne(mappedBy = "patient")
+    private DossierMedical dossierMedical;
 }

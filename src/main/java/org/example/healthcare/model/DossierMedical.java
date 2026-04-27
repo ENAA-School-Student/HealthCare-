@@ -22,5 +22,6 @@ public class DossierMedical {
     private LocalDate dateCreation;
 
     @OneToOne
-    Patient patient;
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 }
