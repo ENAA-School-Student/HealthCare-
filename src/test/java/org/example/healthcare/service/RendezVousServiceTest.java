@@ -36,11 +36,12 @@ class RendezVousServiceTest {
     private RendezVousMapper mapper;
 @Autowired
     private RendezVousRepository rvRepo;
+@Autowired
+    private RendezVousService rendezVousService;
 
     Medecin medecin = new Medecin();
     Patient patient = new Patient();
-    @Autowired
-    private RendezVousService rendezVousService;
+
 
     @Test
 
