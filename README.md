@@ -45,3 +45,26 @@ Diagrammes UML:
 -Diagrammes de séquence:
 ![img_2.png](img_2.png)
 ![img_3.png](img_3.png)
+
+
+-------------------------------------------------------------------------------------
+
+
+les étapes de création des conteneurs : app & mysql
+
+.\mvnw.cmd clean package -DskipTests
+
+
+docker network create healthcare-net
+
+
+docker build -t healthcare-img .
+
+
+docker run -d --name db-mysql --network healthcare-net -e MYSQL_DATABASE=healthcare -e MYSQL_ROOT_PASSWORD=2002 -p 3307:3306 mysql:latest
+
+
+timeout /t 20
+
+
+docker run -d --name healthcare-app --network healthcare-net -p 8080:8080 -e "SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql:3306/healthcare" -e "SPRING_DATASOURCE_USERNAME=root" -e "SPRING_DATASOURCE_PASSWORD=2002" healthcare-img
