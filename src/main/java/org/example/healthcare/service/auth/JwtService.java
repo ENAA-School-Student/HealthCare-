@@ -22,10 +22,10 @@ public class JwtService {
         return Keys.hmacShaKeyFor(secret_key.getBytes());
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(String username, String password) {
 
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
+                .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)

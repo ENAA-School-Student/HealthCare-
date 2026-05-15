@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -20,9 +20,9 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
-    public String register(@RequestBody RegisterRequest registerRequest){
-        service.register(registerRequest);
-        return "utilisateur crée avec succes";
+    public AuthResponse register(@RequestBody RegisterRequest registerRequest){
+     String token =  service.register(registerRequest);
+        return new AuthResponse(token);
     }
 
 

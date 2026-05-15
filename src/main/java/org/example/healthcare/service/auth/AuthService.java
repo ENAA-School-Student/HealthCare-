@@ -18,13 +18,14 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public void register(RegisterRequest request) {
+    public String register(RegisterRequest request) {
         Utilisateur user = new Utilisateur();
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         user.setRole(request.getRole());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         repo.save(user);
+        return jwtService.generateToken(request.getUsername(),request.getPassword());
     }
     public String authenticate(AuthRequest request) {
 
@@ -46,13 +47,6 @@ public class AuthService {
         )) {
             throw new RuntimeException("wrong password");
         }
-        return jwtService.generateToken(
-                org.springframework.security.core.userdetails.User
-                        .builder()
-                        .username(user.getUsername())
-                        .password(user.getPassword())
-                        .roles(user.getRole().name())
-                        .build()
-        );
+        return jwtService.generateToken(request.getUsername(),request.getPassword());
     }
 }

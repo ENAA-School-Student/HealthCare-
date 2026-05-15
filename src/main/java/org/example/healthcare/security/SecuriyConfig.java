@@ -1,4 +1,4 @@
-package org.example.healthcare.configuration;
+package org.example.healthcare.security;
 
 import lombok.RequiredArgsConstructor;
 import org.example.healthcare.service.auth.CustomUserDetailsService;
@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,7 +28,7 @@ public class SecuriyConfig {
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/login","/api/register").permitAll()
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/auth/login","/auth/register").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter,UsernamePasswordAuthenticationFilter.class);
         return http.build();
