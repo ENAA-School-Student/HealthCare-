@@ -3,6 +3,7 @@ package org.example.healthcare.service;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.example.healthcare.dto.MedecinDTO;
+import org.example.healthcare.dto.PatientDTO;
 import org.example.healthcare.mapper.MedecinMapper;
 import org.example.healthcare.model.Medecin;
 import org.example.healthcare.repository.MedecinRepository;

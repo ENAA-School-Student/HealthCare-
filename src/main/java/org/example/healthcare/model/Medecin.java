@@ -23,5 +23,6 @@ public class Medecin {
 
     @OneToMany(mappedBy = "medecin")
    private List<RendezVous> rendezVousList = new ArrayList<>();
-
+@OneToOne
+Utilisateur utilisateur;
 }

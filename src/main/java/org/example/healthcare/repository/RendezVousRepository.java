@@ -2,6 +2,7 @@ package org.example.healthcare.repository;
 
 import org.example.healthcare.model.RendezVous;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
