@@ -1,5 +1,6 @@
 package org.example.healthcare.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.healthcare.dto.auth.AuthRequest;
 import org.example.healthcare.dto.auth.AuthResponse;
@@ -12,22 +13,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService service;
-    private final PasswordEncoder passwordEncoder;
-
     @PostMapping("/register")
-    public AuthResponse register(@RequestBody RegisterRequest registerRequest){
+    public AuthResponse register(@Valid @RequestBody RegisterRequest registerRequest){
      String token =  service.register(registerRequest);
         return new AuthResponse(token);
     }
 
 
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody AuthRequest authRequest){
+    public AuthResponse login(@Valid @RequestBody AuthRequest authRequest){
         String token = service.authenticate(authRequest);
         return new AuthResponse(token);
     }

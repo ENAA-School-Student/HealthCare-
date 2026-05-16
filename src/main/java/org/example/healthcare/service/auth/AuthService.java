@@ -45,7 +45,7 @@ public class AuthService {
                 request.getPassword(),
                 user.getPassword()
         )) {
-            throw new RuntimeException("wrong password");
+            throw new RuntimeException("mot de passe incorrect");
         }
         return jwtService.generateToken(request.getUsername(),request.getPassword());
     }
