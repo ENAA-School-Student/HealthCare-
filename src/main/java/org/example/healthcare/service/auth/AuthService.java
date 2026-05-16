@@ -5,6 +5,7 @@ import org.example.healthcare.dto.auth.AuthRequest;
 import org.example.healthcare.dto.auth.RegisterRequest;
 import org.example.healthcare.model.Utilisateur;
 import org.example.healthcare.repository.UtilisateurRepository;
+import org.example.healthcare.security.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,18 +26,18 @@ public class AuthService {
         user.setRole(request.getRole());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         repo.save(user);
-        return jwtService.generateToken(request.getUsername(),request.getPassword());
+        return jwtService.generateToken(request.getEmail(),request.getPassword());
     }
     public String authenticate(AuthRequest request) {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
+                        request.getEmail(),
                         request.getPassword()
                 )
         );
         Utilisateur user =
-                repo.findByUsername(request.getUsername());
+                repo.findByEmail(request.getEmail());
 
         if (user == null) {
             throw new RuntimeException("utilisateur introuvable");
@@ -47,6 +48,6 @@ public class AuthService {
         )) {
             throw new RuntimeException("mot de passe incorrect");
         }
-        return jwtService.generateToken(request.getUsername(),request.getPassword());
+        return jwtService.generateToken(request.getEmail(),request.getPassword());
     }
 }

@@ -1,4 +1,4 @@
-package org.example.healthcare.service.auth;
+package org.example.healthcare.security;
 
 import lombok.RequiredArgsConstructor;
 import org.example.healthcare.model.Utilisateur;
@@ -17,12 +17,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Utilisateur user = userRepository.findByUsername(username);
+        Utilisateur user = userRepository.findByEmail(username);
 
         if(user == null){
             throw new UsernameNotFoundException("utilisateur introuvable");
         }
-        return User.withUsername(user.getUsername())
+        return User.withUsername(user.getEmail())
                 .password(user.getPassword())
                 .roles(user.getRole().name())
                 .build();

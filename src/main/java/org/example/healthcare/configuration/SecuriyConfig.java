@@ -1,8 +1,8 @@
-package org.example.healthcare.security;
+package org.example.healthcare.configuration;
 
 import lombok.RequiredArgsConstructor;
-import org.example.healthcare.service.auth.CustomUserDetailsService;
-import org.example.healthcare.service.auth.JwtFilter;
+import org.example.healthcare.exception.GlobalExceptionHandler;
+import org.example.healthcare.security.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,10 +21,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecuriyConfig {
     private final CustomUserDetailsService userDetailsService;
-    private final JwtFilter jwtFilter;
 
      @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, GlobalExceptionHandler.JwtFilter jwtFilter) throws Exception {
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

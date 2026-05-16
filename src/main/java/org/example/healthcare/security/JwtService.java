@@ -1,17 +1,14 @@
-package org.example.healthcare.service.auth;
+package org.example.healthcare.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
-
-import static javax.crypto.Cipher.SECRET_KEY;
 
 @Service
 public class JwtService {
@@ -22,10 +19,10 @@ public class JwtService {
         return Keys.hmacShaKeyFor(secret_key.getBytes());
     }
 
-    public String generateToken(String username, String password) {
+    public String generateToken(String email, String password) {
 
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
