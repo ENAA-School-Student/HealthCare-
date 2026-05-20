@@ -36,20 +36,11 @@ public class SecuriyConfig {
      @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, GlobalExceptionHandler.JwtFilter jwtFilter) throws Exception {
 
-         http
-                 .cors(c -> {
-                     CorsConfigurationSource source = corsConfigurationSource();
-                     c.configurationSource(source);
-                 })
-                 .csrf(AbstractHttpConfigurer::disable)
+         http.csrf(AbstractHttpConfigurer::disable)
                  .authorizeHttpRequests(auth -> {
                      auth.requestMatchers(
                                      "/api/auth/**"
                              ).permitAll()
-                             .requestMatchers(HttpMethod.GET, "/api/patient","/api/medecin").hasRole("ADMIN")
-                             .requestMatchers(HttpMethod.POST,"/api/medecin/ajouter","/api/patient/ajouter").hasRole("ADMIN")
-                             .requestMatchers(HttpMethod.PUT,"/api/medecin/modifier/{id}","/api/patient/modifier/{id}").hasRole("ADMIN")
-                             .requestMatchers(HttpMethod.DELETE,"/api/medecin/modifier/{id}","/api/patient/modifier/{id}").hasRole("ADMIN")
                              .anyRequest()
                              .authenticated();
                  })
@@ -70,17 +61,4 @@ public class SecuriyConfig {
          authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
          return authenticationManagerBuilder.build();
      }
-
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:8080"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
 }

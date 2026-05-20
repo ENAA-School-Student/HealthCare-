@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import org.example.healthcare.dto.MedecinDTO;
 import org.example.healthcare.model.Medecin;
 import org.example.healthcare.service.MedecinService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,12 +15,13 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/medecin")
+@PreAuthorize("hasRole('ADMIN')")
 public class MedecinController {
     private final MedecinService medecinService;
 
     @GetMapping
-    public List<MedecinDTO> medecinList(){
-        return medecinService.medecinsList();
+    public Page<MedecinDTO> medecinList(Pageable pageable){
+        return medecinService.medecinsList(pageable);
     }
 
     @PostMapping("/ajouter")

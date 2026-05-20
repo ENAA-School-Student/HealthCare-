@@ -5,19 +5,24 @@ import lombok.AllArgsConstructor;
 import org.example.healthcare.dto.PatientDTO;
 import org.example.healthcare.model.Patient;
 import org.example.healthcare.service.PatientService;
+import org.springdoc.core.converters.models.PageableAsQueryParam;
+import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @AllArgsConstructor
 @RestController
+@PreAuthorize("hasRole('ADMIN')")
 @RequestMapping("/api/patient")
 public class PatientController {
     private final PatientService patientService;
 
     @GetMapping
-    public List<PatientDTO> getPatients() {
-        return patientService.patientsList();
+    public Page<PatientDTO> getPatients(Pageable pageabl) {
+        return patientService.patientsList(pageabl);
     }
     @PostMapping("/ajouter")
     public PatientDTO ajouterPatient(@Valid @RequestBody PatientDTO patientDTO) {

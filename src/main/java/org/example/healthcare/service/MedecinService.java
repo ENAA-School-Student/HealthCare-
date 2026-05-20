@@ -7,8 +7,11 @@ import org.example.healthcare.dto.PatientDTO;
 import org.example.healthcare.mapper.MedecinMapper;
 import org.example.healthcare.model.Medecin;
 import org.example.healthcare.repository.MedecinRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.core.support.RepositoryMethodInvocationListener;
 import org.springframework.stereotype.Service;
+import org.springframework.web.accept.ApiVersionStrategy;
 import tools.jackson.databind.cfg.MapperBuilder;
 
 import java.util.List;
@@ -18,6 +21,7 @@ import java.util.List;
 public class MedecinService {
     private final MedecinRepository medecinRepository;
     private final MedecinMapper medecinMapper;
+    private final ApiVersionStrategy mvcApiVersionStrategy;
 
     public MedecinDTO ajouterMedecin(MedecinDTO medecinDTO){
         Medecin medecin = medecinMapper.toEntity(medecinDTO);
@@ -39,8 +43,8 @@ public class MedecinService {
         medecinRepository.delete(medecin);
     }
 
-    public List<MedecinDTO> medecinsList(){
-        List<Medecin> medecins = medecinRepository.findAll();
-        return medecinMapper.toDTO(medecins);
+    public Page<MedecinDTO> medecinsList(Pageable pageable){
+        Page<Medecin> medecins = medecinRepository.findAll(pageable);
+        return medecins.map(medecinMapper::toDTO);
     }
 }
