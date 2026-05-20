@@ -10,8 +10,10 @@ import org.example.healthcare.model.RendezVous;
 import org.example.healthcare.repository.MedecinRepository;
 import org.example.healthcare.repository.PatientRepository;
 import org.example.healthcare.repository.RendezVousRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -77,17 +79,18 @@ public class RendezVousService {
         return rendezVousMapper.toDTO(rendezVousRepository.save(rendezVous));
     }
 
-    public List<RendezVousDTO> rendezVousDTOList(){
-        return rendezVousMapper.toDTO(rendezVousRepository.findAll());
+    public Page<RendezVousDTO> rendezVousDTOList(Pageable pageable){
+        Page<RendezVous> rendezVousPage = rendezVousRepository.findAll(pageable);
+        return rendezVousPage.map(rendezVousMapper::toDTO);
     }
 
-    public List<RendezVousDTO> rendezVousDtoPatient(Long idPatient){
-        List<RendezVous> list = rendezVousRepository.findByPatient_Id(idPatient);
-        return rendezVousMapper.toDTO(list);
+    public Page<RendezVousDTO> rendezVousDtoPatient(Long idPatient, Pageable pageable){
+        Page<RendezVous> pageRv = rendezVousRepository.findByPatient_Id(idPatient,pageable);
+        return pageRv.map(rendezVousMapper::toDTO);
     }
 
-    public List<RendezVousDTO> rendezVousDtoMedecin(Long idMedecin){
-        List<RendezVous> list = rendezVousRepository.findByMedecin_Id(idMedecin);
-        return rendezVousMapper.toDTO(list);
+    public Page<RendezVousDTO> rendezVousDtoMedecin(Long idMedecin, Pageable pageable){
+        Page<RendezVous> list = rendezVousRepository.findByMedecin_Id(idMedecin,pageable);
+        return list.map(rendezVousMapper::toDTO);
     }
 }

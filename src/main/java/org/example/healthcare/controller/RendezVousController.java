@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import org.example.healthcare.dto.RendezVousDTO;
 import org.example.healthcare.model.RendezVous;
 import org.example.healthcare.service.RendezVousService;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @AllArgsConstructor
@@ -18,19 +20,19 @@ public class RendezVousController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public List<RendezVousDTO> rendezVousList(){
-        return rendezVousService.rendezVousDTOList();
+    public Page<RendezVousDTO> rendezVousList(Pageable pageable){
+        return rendezVousService.rendezVousDTOList(pageable);
     }
-    @GetMapping("/rendezVousPatient/{idPatient}")
 
     @PreAuthorize("hasRole('PATIENT')")
-    public List<RendezVousDTO> rendezVousPatient(@PathVariable Long idPatient){
-        return rendezVousService.rendezVousDtoPatient(idPatient);
+    @GetMapping("/rendezVousPatient/{idPatient}")
+    public Page<RendezVousDTO> rendezVousPatient(@PathVariable Long idPatient,Pageable pageable){
+        return rendezVousService.rendezVousDtoPatient(idPatient,pageable);
     }
     @PreAuthorize("hasRole('MEDECIN')")
     @GetMapping("/rendezVousMedecin/{idMedecin}")
-    public List<RendezVousDTO>  rendezVousMedecin(@PathVariable Long idMedecin){
-        return rendezVousService.rendezVousDtoMedecin(idMedecin);
+    public Page<RendezVousDTO>  rendezVousMedecin(@PathVariable Long idMedecin,Pageable pageable){
+        return rendezVousService.rendezVousDtoMedecin(idMedecin,pageable);
     }
     @PreAuthorize("hasRole('MEDECIN')")
     @PostMapping("/CreerRendzVous")
