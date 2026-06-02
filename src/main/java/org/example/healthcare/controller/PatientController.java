@@ -11,29 +11,31 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/patient")
+
 public class PatientController {
     private final PatientService patientService;
-
+    @RequestMapping("/api/patient")
     @GetMapping
     public List<PatientDTO> getPatients() {
         return patientService.patientsList();
     }
+    @RequestMapping("/api/patient")
     @PostMapping("/ajouter")
     public PatientDTO ajouterPatient(@Valid @RequestBody PatientDTO patientDTO) {
        return patientService.ajouterPatient(patientDTO);
     }
-
+    @RequestMapping("/api/patient")
     @PutMapping("/modifier/{id}")
     public PatientDTO modifierPatient( @PathVariable Long id,@Valid @RequestBody PatientDTO patientDTO) {
 return patientService.modifierPatient(id,patientDTO);
     }
-
+    @RequestMapping("/api/patient")
     @DeleteMapping("/supprimer/{id}")
     public void supprimerPatient(@PathVariable Long id) {
         patientService.supprimerPatient(id);
     }
 
+    @RequestMapping("/api/patient")
     @GetMapping("/chercher/{id}")
     public PatientDTO chercherPatient(@PathVariable Long id) {
         return patientService.consulterPatient(id);
