@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@Data
 public class RendezVous {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

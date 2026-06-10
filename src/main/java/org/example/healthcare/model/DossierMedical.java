@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
+@Data
 @NoArgsConstructor
 public class DossierMedical {
     @Id
