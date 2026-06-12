@@ -66,6 +66,7 @@ return patientService.modifierPatient(id,patientDTO);
         return patientService.getPatient(
                 id,
                 authentication.getName()
+
         );
     }
 }
