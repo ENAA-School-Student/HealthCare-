@@ -1,6 +1,12 @@
-
 FROM eclipse-temurin:21-jdk-jammy
 
-COPY target/HealthCare-0.0.1-SNAPSHOT.jar app.jar
+WORKDIR /app
 
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+COPY . .
+
+RUN chmod +x mvnw
+RUN ./mvnw clean package -DskipTests
+
+RUN cp target/*.jar app.jar
+
+ENTRYPOINT ["java","-jar","app.jar"]
