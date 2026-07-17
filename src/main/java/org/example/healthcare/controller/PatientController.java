@@ -17,49 +17,49 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-
+@CrossOrigin(origins = "http://localhost:5174", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 @RequestMapping("/api/patient")
 public class PatientController {
     private final PatientService patientService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public Page<PatientDTO> getPatients(  @PageableDefault(sort = "nom",
             direction = Sort.Direction.ASC) Pageable pageabl) {
         return patientService.patientsList(pageabl);
     }
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/ajouter")
     public PatientDTO ajouterPatient(@Valid @RequestBody PatientDTO patientDTO) {
        return patientService.ajouterPatient(patientDTO);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/modifier/{id}")
     public PatientDTO modifierPatient( @PathVariable Long id,@Valid @RequestBody PatientDTO patientDTO) {
 return patientService.modifierPatient(id,patientDTO);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/supprimer/{id}")
     public void supprimerPatient(@PathVariable Long id) {
         patientService.supprimerPatient(id);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/chercher/{id}")
     public PatientDTO chercherPatient(@PathVariable Long id) {
         return patientService.consulterPatient(id);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/Chercher_par_nom/{nom}")
     public Page<PatientDTO> patientParNom(@PathVariable String nom ,@PageableDefault(direction = Sort.Direction.ASC) Pageable pageable){
         return patientService.PageParNomPatient(nom,pageable);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('PATIENT')")
+    //@PreAuthorize("hasRole('PATIENT')")
     public PatientDTO getPatient(@PathVariable Long id,
                                  Authentication authentication){
 

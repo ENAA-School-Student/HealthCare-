@@ -24,13 +24,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecuriyConfig {
 
     private final CustomUserDetailsService userDetailsService;
-
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
-
-        http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> {
-            auth.anyRequest().permitAll();
-        });
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .cors(cors -> cors.configure(http))
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(org.springframework.web.cors.CorsUtils::isPreFlightRequest).permitAll()
+                        .anyRequest().permitAll()
+                );
 
         return http.build();
     }
