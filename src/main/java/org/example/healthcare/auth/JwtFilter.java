@@ -23,6 +23,14 @@ public class JwtFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getServletPath();
+        return path.startsWith("/auth/") ||
+                path.startsWith("/api/auth/") ||
+                "OPTIONS".equalsIgnoreCase(request.getMethod());
+    }
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain)
@@ -35,7 +43,11 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             jwt = authHeader.substring(7);
-            email = jwtService.extractUsername(jwt);
+            try {
+                email = jwtService.extractUsername(jwt);
+            } catch (Exception e) {
+                email = null;
+            }
         }
 
         if (email != null &&
