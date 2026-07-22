@@ -24,18 +24,14 @@ public class Patient extends Utilisateur {
     @OneToOne(mappedBy = "patient")
     private DossierMedical dossierMedical;
 
-
     public Patient() {
         super();
         this.setRole(Role.PATIENT);
     }
-
     @PrePersist
     public void initRole() {
         if (this.getRole() == null) {
             this.setRole(Role.PATIENT);
         }
     }
-
-    //
 }
