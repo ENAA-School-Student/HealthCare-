@@ -20,4 +20,16 @@ public class Medecin extends Utilisateur {
 
     @OneToMany(mappedBy = "medecin")
     private List<RendezVous> rendezVousList = new ArrayList<>();
+
+    public Medecin() {
+        super();
+        this.setRole(Role.MEDECIN);
+    }
+
+    @PrePersist
+    public void initRole() {
+        if (this.getRole() == null) {
+            this.setRole(Role.MEDECIN);
+        }
+    }
 }
