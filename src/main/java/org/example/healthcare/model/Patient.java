@@ -36,4 +36,6 @@ public class Patient extends Utilisateur {
             this.setRole(Role.PATIENT);
         }
     }
+
+    //
 }
