@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
 
+import static org.example.healthcare.model.Utilisateur.Role.PATIENT;
+
 @Service
 @RequiredArgsConstructor
 public class PatientService {
@@ -27,7 +29,12 @@ private final PatientMapper  patientMapper;
     public PatientDTO ajouterPatient(PatientDTO patientDTO) {
 
     Patient patient = patientMapper.toEntity(patientDTO);
+
+        if (patient.getRole() == null) {
+            patient.setRole(PATIENT);
+        }
     return patientMapper.toDTO(patientRepository.save(patient));
+
 }
 
     @Caching(evict = {
