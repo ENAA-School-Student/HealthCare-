@@ -21,39 +21,39 @@ public class AuthService {
     public String register(RegisterRequest request) {
         Utilisateur user;
 
-        if (request.getRole() == Utilisateur.Role.PATIENT) {
-            Patient patient = new Patient();
-            patient.setNom(request.getNom());
-            patient.setPrenom(request.getPrenom());
-            patient.setTelephone(request.getTelephone());
-            user = patient;
-        } else if (request.getRole() == Utilisateur.Role.MEDECIN) {
+        Utilisateur.Role role = request.getRole() != null ? request.getRole() : Utilisateur.Role.PATIENT;
+
+        if (role == Utilisateur.Role.MEDECIN) {
             Medecin medecin = new Medecin();
             medecin.setNom(request.getNom());
             medecin.setSpecialite(request.getSpecialite());
             medecin.setTelephone(request.getTelephone());
             user = medecin;
         } else {
-            user = new Utilisateur();
+            Patient patient = new Patient();
+            patient.setNom(request.getNom());
+            patient.setPrenom(request.getPrenom());
+            patient.setTelephone(request.getTelephone());
+            user = patient;
         }
 
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
-        user.setRole(request.getRole());
+        user.setRole(role);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        repo.save(user);
-        return jwtService.generateToken(user.getEmail(),user);
-    }
-    public String authenticate(AuthRequest request) {
 
+        repo.save(user);
+        return jwtService.generateToken(user.getEmail(), user);
+    }
+
+    public String authenticate(AuthRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
                         request.getPassword()
                 )
         );
-        Utilisateur user =
-                repo.findByEmail(request.getEmail());
+        Utilisateur user = repo.findByEmail(request.getEmail());
 
         if (user == null) {
             throw new RuntimeException("utilisateur introuvable");
@@ -64,6 +64,6 @@ public class AuthService {
         )) {
             throw new RuntimeException("mot de passe incorrect");
         }
-        return jwtService.generateToken(user.getEmail(),user);
+        return jwtService.generateToken(user.getEmail(), user);
     }
 }
