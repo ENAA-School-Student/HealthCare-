@@ -1,2 +1,2 @@
-ALTER TABLE utilisateur ALTER COLUMN password DROP NOT NULL;
-ALTER TABLE utilisateur ALTER COLUMN username DROP NOT NULL;
+ALTER TABLE utilisateur MODIFY password VARCHAR(255) NULL;
+ALTER TABLE utilisateur MODIFY username VARCHAR(255) NULL;
